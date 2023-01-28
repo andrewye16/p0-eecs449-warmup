@@ -1,0 +1,14 @@
+jaseci > jac run bi_enc.jac -walk train -ctx "{\"train_file\": \"clf_train_1.json\"}"
+jaseci > jac run bi_enc.jac -walk infer -ctx "{\"labels\": [\"test drive\", \"order a tesla\"]}"
+
+
+jaseci > jac run bi_enc.jac -walk infer -ctx "{\"labels\": [\"test drive\", \"order a tesla\"]}"
+Enter input text (Ctrl-C to exit)> i want to order a tesla
+{"label": "order a tesla", "score": 9.812651595405981}
+Enter input text (Ctrl-C to exit)> i want to test drive
+{"label": "test drive", "score": 6.931458692617463}
+Enter input text (Ctrl-C to exit)>
+
+
+jaseci > jac run bi_enc.jac -walk save_model -ctx "{\"model_path\": \"dialogue_intent_model\"}"
+jaseci > jac run tfm_ner.jac -walk train -ctx "{\"train_file\": \"ner_train.json\"}"
