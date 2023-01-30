@@ -274,36 +274,25 @@ graph tesla_ai {
     }
 }
 
+
+
 walker talk {
-    has question, interactive = false;
-    has wlk_ctx = {
-        "intent": null,
-        "entities": {},
-        "prev_state": null,
-        "next_state": null,
-        "respond": false
-    };
+    has question;
+    has wlk_ctx = {};
     has response;
     root {
         take --> node::dialogue_root;
     }
     cai_state {
-        if (!question and interactive) {
+        if (!question) {
             question = std.input("Question (Ctrl-C to exit)> ");
             here::init_wlk_ctx;
-        } elif (!question and !interactive){
-            std.err("ERROR: question is required for non-interactive mode");
-            disengage;
         }
         here::nlu;
         here::process;
         if (visitor.wlk_ctx["respond"]) {
             here::nlg;
-            if (interactive): std.out(response);
-            else {
-                yield report response;
-                here::init_wlk_ctx;
-            }
+            std.out(response);
             question = null;
             take here;
         } else {
@@ -312,30 +301,21 @@ walker talk {
     }
 }
 
+
 // walker talk {
 //     has question;
-//     has wlk_ctx = {};
-//     has response;
 //     root {
+//         question = std.input("> ");
 //         take --> node::dialogue_root;
 //     }
-//     cai_state {
-//         if (!question) {
-//             question = std.input("Question (Ctrl-C to exit)> ");
-//             here::init_wlk_ctx;
-//         }
-//         here::nlu;
-//         here::process;
-//         if (visitor.wlk_ctx["respond"]) {
-//             here::nlg;
-//             std.out(response);
-//             question = null;
-//             take here;
-//         } else {
-//             take visitor.wlk_ctx["next_state"] else: take here;
-//         }
+//     dialogue_root {
+//         take -[intent_transition(intent==question)]-> node::dialogue_state;
+//     }
+//     dialogue_state {
+//         std.out(here.response);
 //     }
 // }
+
 
 node cai_state {
     has name;
