@@ -12,3 +12,11 @@ Enter input text (Ctrl-C to exit)>
 
 jaseci > jac run bi_enc.jac -walk save_model -ctx "{\"model_path\": \"dialogue_intent_model\"}"
 jaseci > jac run tfm_ner.jac -walk train -ctx "{\"train_file\": \"ner_train.json\"}"
+
+jaseci > jac run tfm_ner.jac -walk load_model -ctx "{\"model_path\": \"tfm_ner_model\"}"
+
+walker run load_model -ctx "{\"model_type\": \"bi_enc\", \"model_path\": \"dialogue_intent_model\"}"
+
+walker run load_model -ctx "{\"model_type\": \"tfm_ner\", \"model_path\": \"tfm_ner_model\"}"
+
+actions load module jac_nlp.use_qa

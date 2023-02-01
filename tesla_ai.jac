@@ -1,3 +1,4 @@
+import {*} with "./ai_model.jac";
 node faq_root:cai_state {
     can use.qa_classify;
     can nlu {
